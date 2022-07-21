@@ -11,7 +11,7 @@ a {
   justify-content: space-between;
   align-items: center;
   background-color: rgb(0, 0, 0);
-  padding: 8px 12px;
+  padding: 5px 12px;
 }
 .nav__box {
   display: flex;
@@ -39,6 +39,7 @@ a {
   border: 3px solid white;
   background-color: #000;
   color: #fff;
+  padding-left: 5px;
 }
 .nav__search input:focus {
   outline: none;
@@ -52,4 +53,59 @@ a {
   background-color: #000;
   color: #fff;
   margin-left: 5px;
+}
+
+/* DropDown */
+
+.navbar__toogleBtn {
+  color: #fff;
+  position: absolute;
+  left: 180px;
+  display: none;
+}
+.dropBtn {
+  opacity: 1;
+  background-color: #000;
+  color: #fff;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+.drop__icon {
+  margin-left: 5px;
+}
+.drop_menu {
+  display: none;
+  position: absolute;
+  top: 43px;
+  background-color: #000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.drop_menu a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.drop_menu a:hover {
+  background-color: rgb(31, 30, 30);
+  border-radius: 5px;
+}
+.navbar__toogleBtn:hover .drop_menu {
+  display: block;
+}
+.navbar__toogleBtn:hover .dropBtn {
+  background-color: rgb(31, 30, 30);
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav__menu {
+    display: none;
+  }
+  .navbar__toogleBtn {
+    display: flex;
+  }
 }

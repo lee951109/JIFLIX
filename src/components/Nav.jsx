@@ -1,9 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Dropdown, DropdownDivider } from "semantic-ui-react";
+
+const options = [
+  { key: 1, text: "Choice 1", value: 1 },
+  { key: 2, text: "Choice 2", value: 2 },
+  { key: 3, text: "Choice 3", value: 3 },
+];
 
 const Nav = () => {
+  let navigate = useNavigate();
+
   return (
     <div>
       <div className="navbar">
@@ -28,6 +37,18 @@ const Nav = () => {
               <Link to="/movies/:id">My Favorite</Link>
             </li>
           </ul>
+        </div>
+
+        <div className="navbar__toogleBtn">
+          <button className="dropBtn">
+            Menu
+            <FontAwesomeIcon icon={faCaretDown} className="drop__icon" />
+          </button>
+          <div className="drop_menu">
+            <Link to="/">Home</Link>
+            <Link to="/movies">Movies</Link>
+            <Link to="/movies/:id">My Favorite</Link>
+          </div>
         </div>
         <form>
           <div className="nav__search">
