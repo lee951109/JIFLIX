@@ -21,6 +21,15 @@ function getMovies() {
       topRatedApi,
       upComingApi,
     ]);
+
+    dispatch({
+      type: "GET_MOVIES_SUCCESS",
+      payload: {
+        popular: popular.data,
+        topRated: topRated.data,
+        upcoming: upcoming.data,
+      },
+    });
   };
 }
 
