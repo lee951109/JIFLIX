@@ -1,0 +1,3 @@
+
+# 특정 파일 prettier 룰 제외
+.env

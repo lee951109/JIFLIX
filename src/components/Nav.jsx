@@ -1,18 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Dropdown, DropdownDivider } from "semantic-ui-react";
-
-const options = [
-  { key: 1, text: "Choice 1", value: 1 },
-  { key: 2, text: "Choice 2", value: 2 },
-  { key: 3, text: "Choice 3", value: 3 },
-];
 
 const Nav = () => {
-  let navigate = useNavigate();
-
   return (
     <div>
       <div className="navbar">
