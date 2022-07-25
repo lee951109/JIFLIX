@@ -1,24 +1,47 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../components/Banner";
+
 import { movieAction } from "../redux/actions/movieAction";
+import { ClipLoader } from "react-spinners";
+
+import Banner from "../components/Banner";
+import MovieSlide from "../components/MovieSlide";
+
+const override = {
+  display: "flex",
+  margin: "0 auto",
+  borderColor: "#E50915",
+  textAlign: "center",
+};
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { popularMovies, topRatedMovies, upComingMovies } = useSelector(
-    (state) => state.movie
-  );
+  const { popularMovies, topRatedMovies, upcomingMovies, loading } =
+    useSelector((state) => state.movie);
 
   useEffect(() => {
     dispatch(movieAction.getMovies());
   }, []);
 
+  if (loading) {
+    return (
+      <ClipLoader
+        color="#E50915"
+        loading={loading}
+        cssOverride={override}
+        size={150}
+      />
+    );
+  }
   return (
     <div>
-      {
-        /* 조건부 랜더링 => popularMovies.results가 있으면 Banner를 보여준다*/
-        popularMovies.results && <Banner movie={popularMovies.results[0]} />
-      }
+      <Banner movie={popularMovies.results[0]} />
+      <h1>인기 영화</h1>
+      <MovieSlide movies={popularMovies} />
+      <h1>탑 20 영화</h1>
+      <MovieSlide movies={topRatedMovies} />
+      <h1>개봉 예정 영화</h1>
+      <MovieSlide movies={upcomingMovies} />
     </div>
   );
 };

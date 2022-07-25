@@ -1,5 +1,7 @@
 body {
   margin: 0px;
+  background-color: #000;
+  color: #fff;
 }
 a {
   text-decoration: none;
@@ -21,7 +23,7 @@ a {
 }
 .nav__log img {
   width: 120px;
-  height: 40px;
+  height: 80px;
   vertical-align: middle;
 }
 .nav__menu {
@@ -117,6 +119,7 @@ a {
   align-items: center;
   background-repeat: no-repeat;
   background-size: cover;
+  width: 100%;
 }
 .banner::before {
   position: absolute;

@@ -10,10 +10,7 @@ const Nav = () => {
         <div className="nav__box">
           <div className="nav__log">
             <Link to="/">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
-                alt="Netflix"
-              />
+              <img src={require("../images/logo.png")} alt="JIFLIX" />
             </Link>
           </div>
 
