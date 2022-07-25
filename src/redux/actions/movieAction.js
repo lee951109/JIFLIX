@@ -17,11 +17,16 @@ function getMovies() {
         `/movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=1`
       );
 
+      const genreApi = api.get(
+        `/genre/movie/list?api_key=${API_KEY}&language=ko-KR`
+      );
+
       // 병렬 방식으로 API를 동시에 호출 한다.
-      let [popular, topRated, upcoming] = await Promise.all([
+      let [popular, topRated, upcoming, genreList] = await Promise.all([
         popularMovieApi,
         topRatedApi,
         upComingApi,
+        genreApi,
       ]);
 
       dispatch({
@@ -30,6 +35,7 @@ function getMovies() {
           popular: popular.data,
           topRated: topRated.data,
           upcoming: upcoming.data,
+          genreList: genreList.data.genres,
         },
       });
     } catch (error) {

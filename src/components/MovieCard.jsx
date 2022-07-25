@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const OverLay = styled.div`
@@ -41,6 +42,8 @@ const GenreId = styled.div`
 `;
 
 const MovieCard = ({ item }) => {
+  const { genreList } = useSelector((state) => state.movie);
+
   return (
     <Card
       style={{
@@ -53,8 +56,10 @@ const MovieCard = ({ item }) => {
       <OverLay>
         <h1>{item.title}</h1>
         <FlexDiv>
-          {item.genre_ids.map((id) => (
-            <GenreId>{id}</GenreId>
+          {item.genre_ids.map((id, index) => (
+            <GenreId key={index}>
+              {genreList.find((item) => item.id === id).name}
+            </GenreId>
           ))}
         </FlexDiv>
         <div>
