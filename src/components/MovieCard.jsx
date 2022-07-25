@@ -16,15 +16,21 @@ const Card = styled.div`
   background-size: cover;
   align-items: center;
   display: flex;
+  position: relative;
+  z-index: 1;
   &:hover {
     cursor: pointer;
-    width: 400px;
-    height: 300px;
+    width: 350px;
+    height: 200px;
     margin: 30px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+
+    z-index: 5;
   }
   &:hover ${OverLay} {
     opacity: 1;
-    z-index: 1;
     transition: 0.5s;
   }
 `;
