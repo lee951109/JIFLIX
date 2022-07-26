@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const OverLay = styled.div`
+  position: absolute;
   opacity: 0;
   background: rgba(43, 41, 41, 0.9);
   width: 100%;
@@ -10,28 +11,24 @@ const OverLay = styled.div`
 `;
 
 const Card = styled.div`
-  width: 300px;
-  height: 200px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  align-items: center;
-  display: flex;
   position: relative;
-  z-index: 1;
-  &:hover {
-    cursor: pointer;
-    width: 350px;
-    height: 200px;
-    margin: 30px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    align-items: center;
-
-    z-index: 5;
+  width: 400px;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 5px;
+  flex: none;
+  &:hover,
+  &:focus {
+    transform: scale(1.2);
+    z-index: 1;
+    position: absolute;
+    transition: 500ms;
   }
   &:hover ${OverLay} {
     opacity: 1;
-    transition: 0.5s;
+    transition: 500ms;
   }
 `;
 
@@ -43,19 +40,21 @@ const GenreId = styled.div`
   border: 1px solid #e50915;
   background-color: #e50915;
   color: #fff;
-  width: 50px;
+  width: auto;
   border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
 `;
 
 const MovieCard = ({ item }) => {
   const { genreList } = useSelector((state) => state.movie);
-
+  console.log(item);
   return (
     <Card
       style={{
         backgroundImage:
           "url(" +
-          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${item.backdrop_path}` +
+          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${item.poster_path}` +
           ")",
       }}
     >
