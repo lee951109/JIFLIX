@@ -1,60 +1,23 @@
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-const OverLay = styled.div`
-  opacity: 0;
-  background: rgba(43, 41, 41, 0.9);
-  width: 100%;
-  height: 100%;
-`;
-
-const Card = styled.div`
-  width: 300px;
-  height: 200px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  align-items: center;
-  display: flex;
-  &:hover {
-    cursor: pointer;
-    width: 400px;
-    height: 300px;
-    margin: 30px;
-  }
-  &:hover ${OverLay} {
-    opacity: 1;
-    z-index: 1;
-    transition: 0.5s;
-  }
-`;
-
-const FlexDiv = styled.div`
-  display: flex;
-`;
-
-const GenreId = styled.div`
-  border: 1px solid #e50915;
-  background-color: #e50915;
-  color: #fff;
-  width: 50px;
-  border-radius: 5px;
-`;
-
 const MovieCard = ({ item }) => {
   const { genreList } = useSelector((state) => state.movie);
-
+  console.log(item);
   return (
     <Card
       style={{
         backgroundImage:
           "url(" +
-          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${item.backdrop_path}` +
+          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${item.poster_path}` +
           ")",
       }}
     >
       <OverLay>
-        <h1>{item.title}</h1>
+        <h2>{item.title}</h2>
         <FlexDiv>
           {item.genre_ids.map((id, index) => (
             <GenreId key={index}>
@@ -62,13 +25,90 @@ const MovieCard = ({ item }) => {
             </GenreId>
           ))}
         </FlexDiv>
-        <div>
-          <span>{item.vote_average}</span>
-          <span>{item.adult ? "청불" : ""}</span>
-        </div>
+        <MovieDetail>
+          <FontAwesomeIcon icon={faStar} className="star" />
+          <span className="vote">{item.vote_average}</span>
+          <span className="adult" adult={item.adult}>
+            {item.adult ? "청불" : "Under 18"}
+          </span>
+        </MovieDetail>
       </OverLay>
     </Card>
   );
 };
 
 export default MovieCard;
+
+const OverLay = styled.div`
+  position: absolute;
+  opacity: 0;
+  background: rgba(43, 41, 41, 0.9);
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  h2 {
+    margin-left: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+`;
+
+const Card = styled.div`
+  position: relative;
+  width: 350px;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  flex: none;
+  &:hover,
+  &:focus {
+    position: absolute;
+    transform: scale(1.2);
+    z-index: 1;
+    transition: 500ms;
+    box-shadow: 3px 3px 3px 3px rgba(37, 37, 37, 0.9);
+  }
+  &:hover ${OverLay} {
+    opacity: 1;
+    transition: 500ms;
+    border-radius: 5px;
+    z-index: 99;
+  }
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  margin-left: 10px;
+`;
+
+const GenreId = styled.div`
+  border: 1px solid #dc143c;
+  background-color: #dc143c;
+  color: #cfcee8;
+  width: auto;
+  font-size: small;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
+  flex-wrap: wrap;
+`;
+
+const MovieDetail = styled.div`
+  position: absolute;
+  bottom: 15px;
+  margin-left: 10px;
+  font-size: 1.2em;
+  span {
+    margin: 5px;
+  }
+  .star {
+    color: #ffff00;
+  }
+  .vote {
+    font-weight: 600;
+  }
+  .adult {
+    ${(props) => (props.adult ? "#cfcee8" : "#dc143c")};
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  }
+`;
