@@ -37,12 +37,14 @@ const Home = () => {
   return (
     <div>
       <Banner movie={popularMovies.results[0]} />
-      <h1>인기 영화</h1>
-      <Carousel movies={popularMovies} />
-      <h1>탑 20 영화</h1>
-      <Carousel movies={topRatedMovies} />
-      <h1>개봉 예정 영화</h1>
-      <Carousel movies={upcomingMovies} />
+      <div className="movie__container">
+        <h1>인기 영화</h1>
+        <Carousel movies={popularMovies} />
+        <h1>탑 20 영화</h1>
+        <Carousel movies={topRatedMovies} />
+        <h1>개봉 예정 영화</h1>
+        <Carousel movies={upcomingMovies} />
+      </div>
     </div>
   );
 };

@@ -2,6 +2,7 @@ body {
   margin: 0px;
   background-color: #000;
   color: #fff;
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;
@@ -103,7 +104,7 @@ a {
   border-radius: 5px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .nav__menu {
     display: none;
   }
@@ -137,4 +138,9 @@ a {
   z-index: 1;
   position: absolute;
   bottom: 15%;
+}
+
+/* Movie container */
+.movie__container {
+  margin: 0 50px;
 }
