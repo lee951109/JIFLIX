@@ -10,7 +10,6 @@ const MovieDetail = () => {
   const { movieDetail, loading } = useSelector((state) => state.detail);
 
   console.log("movieDetail", movieDetail);
-  console.log("movie_id", id);
 
   useEffect(() => {
     dispatch(movieAction.getMovieDetail(id));

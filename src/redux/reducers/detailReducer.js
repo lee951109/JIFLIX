@@ -12,7 +12,7 @@ function detailReducer(state = initialState, action) {
     case "GET_DETAIL_SUCCESS":
       return {
         ...state,
-        movieDetail: payload.detail,
+        movieDetail: payload.response,
         loading: false,
       };
 
