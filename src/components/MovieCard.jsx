@@ -2,11 +2,18 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const MovieCard = ({ item }) => {
   const { genreList } = useSelector((state) => state.movie);
-  console.log(item);
+
+  const navigate = useNavigate();
+
+  const showDetail = () => {
+    navigate(`/movies/${item.id}`);
+  };
+
   return (
     <Card
       style={{
@@ -15,6 +22,7 @@ const MovieCard = ({ item }) => {
           `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${item.poster_path}` +
           ")",
       }}
+      onClick={showDetail}
     >
       <OverLay>
         <h2>{item.title}</h2>
@@ -28,7 +36,7 @@ const MovieCard = ({ item }) => {
         <MovieDetail>
           <FontAwesomeIcon icon={faStar} className="star" />
           <span className="vote">{item.vote_average}</span>
-          <span className="adult" adult={item.adult}>
+          <span className="adult" adult={+item.adult}>
             {item.adult ? "청불" : "Under 18"}
           </span>
         </MovieDetail>
@@ -54,15 +62,17 @@ const OverLay = styled.div`
 
 const Card = styled.div`
   position: relative;
-  width: 350px;
+  width: 100%;
   height: 200px;
   background-size: cover;
   background-position: center;
   border-radius: 5px;
   flex: none;
+
   &:hover,
   &:focus {
     position: absolute;
+    max-width: 400px;
     transform: scale(1.2);
     z-index: 1;
     transition: 500ms;
@@ -73,6 +83,9 @@ const Card = styled.div`
     transition: 500ms;
     border-radius: 5px;
     z-index: 99;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 300px;
   }
 `;
 

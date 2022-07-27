@@ -2,18 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { movieAction } from "../redux/actions/movieAction";
-import { ClipLoader } from "react-spinners";
 
 import Banner from "../components/Banner";
-import MovieSlide from "../components/MovieSlide";
 import Carousel from "../components/Carousel";
-
-const override = {
-  display: "flex",
-  margin: "0 auto",
-  borderColor: "#E50915",
-  textAlign: "center",
-};
+import Loading from "../components/Loading";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,14 +17,7 @@ const Home = () => {
   }, []);
 
   if (loading) {
-    return (
-      <ClipLoader
-        color="#E50915"
-        loading={loading}
-        cssOverride={override}
-        size={150}
-      />
-    );
+    return <Loading loading={loading} />;
   }
   return (
     <div>

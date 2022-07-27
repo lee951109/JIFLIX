@@ -45,6 +45,28 @@ function getMovies() {
   };
 }
 
+function getMovieDetail(id) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "GET_DETAIL_REQUEST" });
+      const movieDetail = await api.get(
+        `/movie/${id}?api_key=${API_KEY}&language=ko-KR`
+      );
+
+      let detail = new Promise({ movieDetail });
+
+      dispatch({
+        type: "GET_DETAIL_SUCCESS",
+        payload: { detail: detail.data },
+      });
+    } catch (error) {
+      dispatch({ type: "GET_DETAIL_FALIURE" });
+      console.log("error", error);
+    }
+  };
+}
+
 export const movieAction = {
   getMovies,
+  getMovieDetail,
 };
