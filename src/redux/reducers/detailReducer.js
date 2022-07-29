@@ -1,6 +1,7 @@
 let initialState = {
   movieDetail: {},
   loading: true,
+  videoId: "",
 };
 
 function detailReducer(state = initialState, action) {
@@ -12,7 +13,8 @@ function detailReducer(state = initialState, action) {
     case "GET_DETAIL_SUCCESS":
       return {
         ...state,
-        movieDetail: payload.response,
+        movieDetail: payload.movieDetail,
+        videoId: payload.videoId,
         loading: false,
       };
 

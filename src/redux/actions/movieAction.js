@@ -40,7 +40,7 @@ function getMovies() {
       });
     } catch (error) {
       dispatch({ type: "GET_MOVIES_FALIURE" });
-      console.log("error", error);
+      console.log("MOVIES_ERROR", error);
     }
   };
 }
@@ -49,19 +49,44 @@ function getMovieDetail(id) {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_DETAIL_REQUEST" });
-      const response = await api.get(
+      const movieDetailApi = api.get(
         `/movie/${id}?api_key=${API_KEY}&language=ko-KR`
       );
+      const videoIdApi = api.get(
+        `movie/${id}/videos?api_key=${API_KEY}&language=ko-KR`
+      );
+
+      let [movieDetail, videoId] = await Promise.all([
+        movieDetailApi,
+        videoIdApi,
+      ]);
       dispatch({
         type: "GET_DETAIL_SUCCESS",
-        payload: { response: response.data },
+        payload: { movieDetail: movieDetail.data, videoId: videoId.data },
       });
     } catch (error) {
       dispatch({ type: "GET_DETAIL_FALIURE" });
-      console.log("error", error);
+      console.log("DETAIL_ERROR", error);
     }
   };
 }
+
+// function getPreview(id) {
+//   return async (dispatch) => {
+//     try {
+//       dispatch({ type: "GET_PREVIEW_REQUEST" });
+
+//       console.log(videoId);
+//       dispatch({
+//         type: "GET_PREVIEW_SUCCEE",
+//         payload: { videoId: videoId.data },
+//       });
+//     } catch (error) {
+//       dispatch({ type: "GET_PREVIEW_FALIURE" });
+//       console.log("PREVIEW_ERROR : ", error);
+//     }
+//   };
+// }
 
 export const movieAction = {
   getMovies,

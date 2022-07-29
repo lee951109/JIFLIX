@@ -121,7 +121,7 @@ const MovieDetail = styled.div`
     font-weight: 600;
   }
   .adult {
-    ${(props) => (props.adult ? "#cfcee8" : "#dc143c")};
+    color: ${(props) => (props.adult ? "#dc143c" : "#9ACD32")};
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   }
 `;
