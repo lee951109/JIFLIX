@@ -109,10 +109,10 @@ const Container = styled.div`
   margin: 15px auto;
   justify-content: center;
   text-align: left;
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: 767px) {
     position: absolute;
     flex-direction: column;
-    top: 600px;
+    top: 150%;
   }
 `;
 
