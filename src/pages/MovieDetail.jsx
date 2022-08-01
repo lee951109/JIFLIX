@@ -105,27 +105,35 @@ const MovieDetail = () => {
             <span>{movieDetail.runtime} 분</span>
           </LittleInfo>
           <hr />
-          <button className="youtube__modal" onClick={toggleModal}>
-            <FontAwesomeIcon icon={faVideoCamera} /> <span>Trailer</span>
-          </button>
+          {videoId.results.length >= 1 ? (
+            <>
+              <button className="youtube__modal" onClick={toggleModal}>
+                <FontAwesomeIcon icon={faVideoCamera} /> <span>Trailer</span>
+              </button>
 
-          <Modal
-            isOpen={isOpen}
-            onRequestClose={toggleModal}
-            contentLabel="My dialog"
-            className="mymodal"
-            overlayClassName="myoverlay"
-            closeTimeoutMS={500}
-          >
-            <button onClick={toggleModal}>
-              <FontAwesomeIcon icon={faX} />
-            </button>
-            {videoId.results.length >= 1 ? (
-              <YouTube videoId={videoId?.results[0].key} opts={opts}></YouTube>
-            ) : (
-              <div></div>
-            )}
-          </Modal>
+              <Modal
+                isOpen={isOpen}
+                onRequestClose={toggleModal}
+                contentLabel="My dialog"
+                className="mymodal"
+                overlayClassName="myoverlay"
+                closeTimeoutMS={500}
+              >
+                <button onClick={toggleModal}>
+                  <FontAwesomeIcon icon={faX} />
+                </button>
+
+                <YouTube
+                  videoId={videoId?.results[0].key}
+                  opts={opts}
+                ></YouTube>
+              </Modal>
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon icon={faVideoCamera} /> <span>No Trailer</span>
+            </>
+          )}
         </CardInfo>
       </Container>
     </div>
