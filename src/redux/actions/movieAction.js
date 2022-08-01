@@ -71,23 +71,6 @@ function getMovieDetail(id) {
   };
 }
 
-// function getPreview(id) {
-//   return async (dispatch) => {
-//     try {
-//       dispatch({ type: "GET_PREVIEW_REQUEST" });
-
-//       console.log(videoId);
-//       dispatch({
-//         type: "GET_PREVIEW_SUCCEE",
-//         payload: { videoId: videoId.data },
-//       });
-//     } catch (error) {
-//       dispatch({ type: "GET_PREVIEW_FALIURE" });
-//       console.log("PREVIEW_ERROR : ", error);
-//     }
-//   };
-// }
-
 export const movieAction = {
   getMovies,
   getMovieDetail,

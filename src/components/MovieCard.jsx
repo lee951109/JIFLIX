@@ -69,8 +69,7 @@ const Card = styled.div`
   border-radius: 5px;
   flex: none;
 
-  &:hover,
-  &:focus {
+  &:hover {
     position: absolute;
     max-width: 400px;
     transform: scale(1.2);

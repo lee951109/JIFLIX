@@ -1,13 +1,13 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faVideoCamera, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import styled from "styled-components";
+import Modal from "react-modal";
 
 import Loading from "../components/Loading";
-
 import { movieAction } from "../redux/actions/movieAction";
 
 const MovieDetail = () => {
@@ -16,6 +16,11 @@ const MovieDetail = () => {
   const { movieDetail, loading, videoId } = useSelector(
     (state) => state.detail
   );
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleModal() {
+    setIsOpen(!isOpen);
+  }
 
   const opts = {
     width: "100%",
@@ -40,12 +45,14 @@ const MovieDetail = () => {
   return (
     <div style={{ position: "relative" }}>
       {videoId.results.length >= 1 ? (
-        <YouTube videoId={videoId?.results[0].key} opts={opts}></YouTube>
+        <YoutubeDiv>
+          <YouTube videoId={videoId?.results[0].key} opts={opts}></YouTube>
+        </YoutubeDiv>
       ) : (
         <div></div>
       )}
       <Container>
-        <Card>
+        <Card className="cardBox">
           <CardImg
             style={{
               backgroundImage:
@@ -55,7 +62,7 @@ const MovieDetail = () => {
             }}
           ></CardImg>
         </Card>
-        <CardInfo>
+        <CardInfo className="cardBox cardInfo">
           <GenerBox>
             {movieDetail.genres.map((gener) => (
               <div className="gener" key={gener.id}>
@@ -75,7 +82,11 @@ const MovieDetail = () => {
             </span>
           </div>
           <hr />
-          <h3>{movieDetail.overview}</h3>
+          <h3>
+            {movieDetail.overview.length > 0
+              ? movieDetail.overview
+              : "개요 없음"}
+          </h3>
           <hr />
           <LittleInfo>
             <div className="red__box">예산</div>
@@ -94,6 +105,27 @@ const MovieDetail = () => {
             <span>{movieDetail.runtime} 분</span>
           </LittleInfo>
           <hr />
+          <button className="youtube__modal" onClick={toggleModal}>
+            <FontAwesomeIcon icon={faVideoCamera} /> <span>Trailer</span>
+          </button>
+
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={toggleModal}
+            contentLabel="My dialog"
+            className="mymodal"
+            overlayClassName="myoverlay"
+            closeTimeoutMS={500}
+          >
+            <button onClick={toggleModal}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+            {videoId.results.length >= 1 ? (
+              <YouTube videoId={videoId?.results[0].key} opts={opts}></YouTube>
+            ) : (
+              <div></div>
+            )}
+          </Modal>
         </CardInfo>
       </Container>
     </div>
@@ -102,35 +134,64 @@ const MovieDetail = () => {
 
 export default MovieDetail;
 
+let YoutubeDiv = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+    margin-bottom: 20px;
+  }
+`;
+
 const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 100vh;
   margin: 15px auto;
   justify-content: center;
   text-align: left;
-  @media screen and (max-width: 767px) {
+  .youtube__modal {
+    display: none;
+  }
+  @media screen and (max-width: 1240px) {
+    max-width: 1200px;
+  }
+  @media screen and (max-width: 768px) {
+    max-width: 740px;
     position: absolute;
+    flex-wrap: nowrap;
     flex-direction: column;
-    top: 150%;
+    padding-top: 100px;
+    top: 25.5em;
+    .cardBox {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .cardInfo {
+      top: 10rem;
+    }
+    .youtube__modal {
+      display: flex;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    max-width: 520px;
+    top: 7em;
   }
 `;
 
 const Card = styled.div`
-  width: 30%;
+  width: 40%;
   height: 100%;
   margin-right: 30px;
+  transition: opacity 0.15s linear;
 `;
 
 const CardImg = styled(Card)`
   width: 100%;
   height: 0;
-  padding-bottom: calc(965 / 640 * 100%);
+  padding-bottom: calc(1000 / 640 * 100%);
   background-size: cover;
   background-repeat: no-repeat;
-  @media screen and (max-width: 1240px) {
-    margin-top: 50%;
-  }
 `;
 
 const CardInfo = styled.div`
