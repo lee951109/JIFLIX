@@ -29,7 +29,8 @@ const MovieCard = ({ movie }) => {
         <FlexDiv>
           {movie.genre_ids.map((id, index) => (
             <GenreId key={index}>
-              {genreList.find((movie) => movie.id === id).name}
+              {genreList.name &&
+                genreList.find((movie) => movie.id === id).name}
             </GenreId>
           ))}
         </FlexDiv>
