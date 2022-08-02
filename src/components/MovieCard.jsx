@@ -5,13 +5,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const MovieCard = ({ item }) => {
+const MovieCard = ({ movie }) => {
   const { genreList } = useSelector((state) => state.movie);
 
   const navigate = useNavigate();
 
   const showDetail = () => {
-    navigate(`/movies/${item.id}`);
+    navigate(`/movies/${movie.id}`);
   };
 
   return (
@@ -19,25 +19,25 @@ const MovieCard = ({ item }) => {
       style={{
         backgroundImage:
           "url(" +
-          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${item.poster_path}` +
+          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.poster_path}` +
           ")",
       }}
       onClick={showDetail}
     >
       <OverLay>
-        <h2>{item.title}</h2>
+        <h2>{movie.title}</h2>
         <FlexDiv>
-          {item.genre_ids.map((id, index) => (
+          {movie.genre_ids.map((id, index) => (
             <GenreId key={index}>
-              {genreList.find((item) => item.id === id).name}
+              {genreList.find((movie) => movie.id === id).name}
             </GenreId>
           ))}
         </FlexDiv>
         <MovieDetail>
           <FontAwesomeIcon icon={faStar} className="star" />
-          <span className="vote">{item.vote_average}</span>
-          <span className="adult" adult={+item.adult}>
-            {item.adult ? "청불" : "Under 18"}
+          <span className="vote">{movie.vote_average}</span>
+          <span className="adult" adult={+movie.adult}>
+            {movie.adult ? "청불" : "Under 18"}
           </span>
         </MovieDetail>
       </OverLay>

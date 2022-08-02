@@ -213,14 +213,14 @@ h1 {
   color: red;
 }
 
-.youtube__modal {
+.trailer {
   background-color: transparent;
   border: none;
   color: red;
   font-size: 1.3rem;
   cursor: pointer;
 }
-.youtube__modal span {
+.trailer span {
   margin-left: 6px;
 }
 

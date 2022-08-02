@@ -56,7 +56,9 @@ const Carousel = ({ movies }) => {
     <Container>
       <StyledSlider {...settings}>
         {movies.results &&
-          movies.results.map((item) => <MovieCard key={item.id} item={item} />)}
+          movies.results.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
       </StyledSlider>
     </Container>
   );

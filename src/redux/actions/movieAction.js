@@ -71,7 +71,29 @@ function getMovieDetail(id) {
   };
 }
 
+function getMovieRecommend(id) {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "GET_RECOMMEND_REQUEST" });
+      const MovieRecommendApi = await api.get(
+        `movie/${id}/recommendations?api_key=${API_KEY}&language=ko-KR&page=1`
+      );
+      console.log(MovieRecommendApi.data);
+      dispatch({
+        type: "GET_RECOMMEND_SUCCESS",
+        payload: {
+          MovieRecommendApi: MovieRecommendApi.data,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: "GET_RECOMMEND_FALIURE" });
+      console.log("RECOMMEND_ERROR", error);
+    }
+  };
+}
+
 export const movieAction = {
   getMovies,
   getMovieDetail,
+  getMovieRecommend,
 };

@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import YouTube from "react-youtube";
 import styled from "styled-components";
 import Modal from "react-modal";
 
 import Loading from "../components/Loading";
 import { movieAction } from "../redux/actions/movieAction";
+import Trailer from "../components/Trailer";
+import Recommend from "../components/Recommend";
 
 const MovieDetail = () => {
   let { id } = useParams();
@@ -22,19 +23,6 @@ const MovieDetail = () => {
     setIsOpen(!isOpen);
   }
 
-  const opts = {
-    width: "100%",
-    height: "500px",
-    playerVars: {
-      autoplay: 1, //자동재생 O
-      rel: 0, //관련 동영상 표시하지 않음
-      modestbranding: 1,
-      loop: 1,
-      controls: 0,
-      mute: 1,
-    },
-  };
-  // 컨트롤 바에 youtube 로고를 표시하지 않음};
   useEffect(() => {
     dispatch(movieAction.getMovieDetail(id));
   }, []);
@@ -44,20 +32,16 @@ const MovieDetail = () => {
   }
   return (
     <div style={{ position: "relative" }}>
-      {videoId.results.length >= 1 ? (
-        <YoutubeDiv>
-          <YouTube videoId={videoId?.results[0].key} opts={opts}></YouTube>
-        </YoutubeDiv>
-      ) : (
-        <div></div>
-      )}
+      <TrailerBox>
+        <Trailer videoId={videoId} />
+      </TrailerBox>
       <Container>
         <Card className="cardBox">
           <CardImg
             style={{
               backgroundImage:
                 "url(" +
-                `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movieDetail.poster_path}` +
+                `https://www.themoviedb.org/t/p/original/${movieDetail.poster_path}` +
                 ")",
             }}
           ></CardImg>
@@ -107,7 +91,7 @@ const MovieDetail = () => {
           <hr />
           {videoId.results.length >= 1 ? (
             <>
-              <button className="youtube__modal" onClick={toggleModal}>
+              <button className="trailer" onClick={toggleModal}>
                 <FontAwesomeIcon icon={faVideoCamera} /> <span>Trailer</span>
               </button>
 
@@ -123,10 +107,7 @@ const MovieDetail = () => {
                   <FontAwesomeIcon icon={faX} />
                 </button>
 
-                <YouTube
-                  videoId={videoId?.results[0].key}
-                  opts={opts}
-                ></YouTube>
+                <Trailer videoId={videoId} />
               </Modal>
             </>
           ) : (
@@ -136,16 +117,15 @@ const MovieDetail = () => {
           )}
         </CardInfo>
       </Container>
+      <Recommend id={id} />
     </div>
   );
 };
 
 export default MovieDetail;
-
-let YoutubeDiv = styled.div`
-  @media screen and (max-width: 768px) {
+const TrailerBox = styled.div`
+  @media screen and (max-width: 1030px) {
     display: none;
-    margin-bottom: 20px;
   }
 `;
 
@@ -156,28 +136,34 @@ const Container = styled.div`
   height: 100vh;
   margin: 15px auto;
   justify-content: center;
-  text-align: left;
-  .youtube__modal {
+  .trailer {
     display: none;
   }
+
   @media screen and (max-width: 1240px) {
     max-width: 1200px;
   }
+
+  @media screen and (max-width: 1030px) {
+    .cardBox {
+      width: 58%;
+      padding-bottom: 90%;
+    }
+  }
+  @media screen and (max-width: 1007px) {
+  }
+
   @media screen and (max-width: 768px) {
-    max-width: 740px;
-    position: absolute;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    padding-top: 100px;
-    top: 25.5em;
+    max-width: 640px;
     .cardBox {
       width: 80%;
       margin: 0 auto;
+      padding-bottom: 120%;
     }
     .cardInfo {
       top: 10rem;
     }
-    .youtube__modal {
+    .trailer {
       display: flex;
     }
   }
@@ -188,24 +174,27 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  width: 40%;
-  height: 100%;
+  width: 30%;
+  max-width: 640px;
+  min-width: 320px;
+  height: 0;
+  max-height: 950px;
+  padding-bottom: calc(800 / 540 * 100%);
   margin-right: 30px;
   transition: opacity 0.15s linear;
 `;
 
-const CardImg = styled(Card)`
+const CardImg = styled.img`
   width: 100%;
   height: 0;
-  padding-bottom: calc(1000 / 640 * 100%);
+  padding-bottom: calc(800 / 540 * 100%);
   background-size: cover;
   background-repeat: no-repeat;
 `;
 
 const CardInfo = styled.div`
-  width: 30%;
-  height: 0;
-  padding-bottom: calc(965 / 640 * 100%);
+  width: 650px;
+  height: 950px;
   margin-left: 20px;
   padding-left: 10px;
 
