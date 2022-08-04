@@ -10,7 +10,7 @@ const Recommend = ({ id }) => {
   const dispatch = useDispatch();
   const { recommend, loading } = useSelector((state) => state.recommend);
 
-  console.log(recommend);
+  console.log("recommend", recommend);
   useEffect(() => {
     dispatch(movieAction.getMovieRecommend(id));
   }, []);
@@ -22,10 +22,12 @@ const Recommend = ({ id }) => {
     <Container>
       <Title>추천 영화({recommend.results.length})</Title>
 
-      {recommend.results &&
-        recommend.results.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
+      <Card>
+        {recommend.results &&
+          recommend.results.map((recommend) => (
+            <MovieCard key={recommend.id} recommend={recommend} />
+          ))}
+      </Card>
     </Container>
   );
 };
@@ -33,9 +35,7 @@ const Recommend = ({ id }) => {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 auto;
-  width: 50%;
-  max-width: 350px;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -44,12 +44,18 @@ const Title = styled.h1`
   padding: 10px;
   color: red;
   font-size: 24px;
-  margin-top: 20%;
-  justify-content: center;
+  margin-top: 15%;
+  margin-left: 45%;
+  width: 140px;
+  height: 40px;
 `;
 
-MovieCard = styled.div`
-  margin-bottom: 20px;
+const Card = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 20px 100px;
+  justify-content: space-between;
 `;
 
 export default Recommend;

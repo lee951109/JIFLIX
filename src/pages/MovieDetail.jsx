@@ -177,11 +177,8 @@ const Card = styled.div`
   width: 30%;
   max-width: 640px;
   min-width: 320px;
-  height: 0;
-  max-height: 950px;
-  padding-bottom: calc(800 / 540 * 100%);
+  height: 865px;
   margin-right: 30px;
-  transition: opacity 0.15s linear;
 `;
 
 const CardImg = styled.img`
@@ -190,11 +187,12 @@ const CardImg = styled.img`
   padding-bottom: calc(800 / 540 * 100%);
   background-size: cover;
   background-repeat: no-repeat;
+  transition: opacity 0.15s linear;
 `;
 
 const CardInfo = styled.div`
   width: 650px;
-  height: 950px;
+  height: 865px;
   margin-left: 20px;
   padding-left: 10px;
 

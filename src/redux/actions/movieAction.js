@@ -78,7 +78,7 @@ function getMovieRecommend(id) {
       const MovieRecommendApi = await api.get(
         `movie/${id}/recommendations?api_key=${API_KEY}&language=ko-KR&page=1`
       );
-      console.log(MovieRecommendApi.data);
+
       dispatch({
         type: "GET_RECOMMEND_SUCCESS",
         payload: {

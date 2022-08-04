@@ -1,48 +1,86 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { movieAction } from "../redux/actions/movieAction";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, recommend }) => {
   const { genreList } = useSelector((state) => state.movie);
-
   const navigate = useNavigate();
 
+  console.log("genreList", genreList);
+
   const showDetail = () => {
-    navigate(`/movies/${movie.id}`);
+    if (movie !== undefined) {
+      navigate(`/movies/${movie.id}`);
+    } else {
+      navigate(`/movies/${recommend.id}`);
+    }
   };
 
+  useEffect(() => {}, [recommend]);
+
+  if (movie !== undefined) {
+    return (
+      <Card
+        style={{
+          backgroundImage:
+            "url(" +
+            `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.poster_path}` +
+            ")",
+        }}
+        onClick={showDetail}
+      >
+        <OverLay>
+          <h2>{movie.title}</h2>
+          <FlexDiv>
+            {movie.genre_ids.map((id, index) => (
+              <GenreId key={index}>
+                {genreList.find((movie) => movie.id === id)?.name}
+              </GenreId>
+            ))}
+          </FlexDiv>
+          <MovieDetail>
+            <FontAwesomeIcon icon={faStar} className="star" />
+            <span className="vote">{movie.vote_average}</span>
+            <span className="adult" adult={+movie.adult}>
+              {movie.adult ? "청불" : "Under 18"}
+            </span>
+          </MovieDetail>
+        </OverLay>
+      </Card>
+    );
+  }
   return (
-    <Card
+    <RecommendCard
       style={{
         backgroundImage:
           "url(" +
-          `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.poster_path}` +
+          `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${recommend.poster_path}` +
           ")",
       }}
       onClick={showDetail}
     >
-      <OverLay>
-        <h2>{movie.title}</h2>
+      <RecommendOverLay>
+        <h2>{recommend.title}</h2>
         <FlexDiv>
-          {movie.genre_ids.map((id, index) => (
+          {recommend.genre_ids.map((id, index) => (
             <GenreId key={index}>
-              {genreList.name &&
-                genreList.find((movie) => movie.id === id).name}
+              {genreList.find((movie) => movie.id === id)?.name}
             </GenreId>
           ))}
         </FlexDiv>
         <MovieDetail>
           <FontAwesomeIcon icon={faStar} className="star" />
-          <span className="vote">{movie.vote_average}</span>
-          <span className="adult" adult={+movie.adult}>
-            {movie.adult ? "청불" : "Under 18"}
+          <span className="vote">{recommend.vote_average}</span>
+          <span className="adult" adult={+recommend.adult}>
+            {recommend.adult ? "청불" : "Under 18"}
           </span>
         </MovieDetail>
-      </OverLay>
-    </Card>
+      </RecommendOverLay>
+    </RecommendCard>
   );
 };
 
@@ -123,5 +161,34 @@ const MovieDetail = styled.div`
   .adult {
     color: ${(props) => (props.adult ? "#dc143c" : "#9ACD32")};
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  }
+`;
+
+// Recommend styled !!
+const RecommendOverLay = styled(OverLay)`
+  opacity: 0;
+  background: rgba(43, 41, 41, 0.9);
+  width: 300px;
+  height: 450px;
+  font-family: Arial, Helvetica, sans-serif;
+  h2 {
+    margin-left: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+`;
+
+const RecommendCard = styled.div`
+  width: 300px;
+  height: 450px;
+  margin: 20px 5%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  &:hover ${RecommendOverLay} {
+    opacity: 1;
+    transition: 500ms;
+    border-radius: 5px;
+    z-index: 99;
   }
 `;
