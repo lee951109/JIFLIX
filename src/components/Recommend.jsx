@@ -8,9 +8,10 @@ import MovieCard from "./MovieCard";
 
 const Recommend = ({ id }) => {
   const dispatch = useDispatch();
-  const { recommend, loading } = useSelector((state) => state.recommend);
+  const { recommend, genres, loading } = useSelector(
+    (state) => state.recommend
+  );
 
-  console.log("recommend", recommend);
   useEffect(() => {
     dispatch(movieAction.getMovieRecommend(id));
   }, []);
@@ -25,7 +26,11 @@ const Recommend = ({ id }) => {
       <Card>
         {recommend.results &&
           recommend.results.map((recommend) => (
-            <MovieCard key={recommend.id} recommend={recommend} />
+            <MovieCard
+              key={recommend.id}
+              recommend={recommend}
+              genres={genres}
+            />
           ))}
       </Card>
     </Container>
@@ -44,8 +49,7 @@ const Title = styled.h1`
   padding: 10px;
   color: red;
   font-size: 24px;
-  margin-top: 15%;
-  margin-left: 45%;
+  margin: 10% auto 10px auto;
   width: 140px;
   height: 40px;
 `;
@@ -56,6 +60,9 @@ const Card = styled.div`
   width: 100%;
   margin: 20px 100px;
   justify-content: space-between;
+  @media screen and (max-width: 949px) {
+    margin: 0 auto;
+  }
 `;
 
 export default Recommend;

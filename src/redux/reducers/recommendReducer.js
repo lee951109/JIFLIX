@@ -1,5 +1,6 @@
 let initialState = {
   recommend: {},
+  genres: [],
   loading: true,
 };
 
@@ -12,7 +13,8 @@ function recommendReducer(state = initialState, action) {
     case "GET_RECOMMEND_SUCCESS":
       return {
         ...state,
-        recommend: payload.MovieRecommendApi,
+        recommend: payload.recommendMovie,
+        genres: payload.genre,
         loading: false,
       };
 

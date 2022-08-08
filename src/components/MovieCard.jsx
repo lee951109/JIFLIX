@@ -8,15 +8,16 @@ import { movieAction } from "../redux/actions/movieAction";
 
 const MovieCard = ({ movie, recommend }) => {
   const { genreList } = useSelector((state) => state.movie);
-  const navigate = useNavigate();
+  const { genres } = useSelector((state) => state.recommend);
 
-  console.log("genreList", genreList);
+  const navigate = useNavigate();
 
   const showDetail = () => {
     if (movie !== undefined) {
       navigate(`/movies/${movie.id}`);
     } else {
       navigate(`/movies/${recommend.id}`);
+      window.location.reload();
     }
   };
 
@@ -67,18 +68,20 @@ const MovieCard = ({ movie, recommend }) => {
         <h2>{recommend.title}</h2>
         <FlexDiv>
           {recommend.genre_ids.map((id, index) => (
-            <GenreId key={index}>
-              {genreList.find((movie) => movie.id === id)?.name}
-            </GenreId>
+            <Genre key={index}>
+              {genres && genres.find((genre) => genre.id === id).name}
+            </Genre>
           ))}
         </FlexDiv>
-        <MovieDetail>
+        <RecoMovieDetail>
           <FontAwesomeIcon icon={faStar} className="star" />
-          <span className="vote">{recommend.vote_average}</span>
+          <span className="vote">
+            {Math.round(recommend.vote_average * 10) / 10}
+          </span>
           <span className="adult" adult={+recommend.adult}>
             {recommend.adult ? "청불" : "Under 18"}
           </span>
-        </MovieDetail>
+        </RecoMovieDetail>
       </RecommendOverLay>
     </RecommendCard>
   );
@@ -191,4 +194,27 @@ const RecommendCard = styled.div`
     border-radius: 5px;
     z-index: 99;
   }
+  &,
+  ${RecommendOverLay} {
+    @media screen and (max-width: 749px) {
+      width: 270px;
+      height: 400px;
+    }
+    @media screen and (max-width: 675px) {
+      width: 230px;
+      height: 350px;
+    }
+    @media screen and (max-width: 575px) {
+      width: 200px;
+      height: 310px;
+    }
+  }
+`;
+
+const Genre = styled(GenreId)`
+  font-size: 15px;
+`;
+
+const RecoMovieDetail = styled(MovieDetail)`
+  font-size: 1.8em;
 `;

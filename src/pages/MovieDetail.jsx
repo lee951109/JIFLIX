@@ -117,7 +117,9 @@ const MovieDetail = () => {
           )}
         </CardInfo>
       </Container>
-      <Recommend id={id} />
+      <RecommendBox>
+        <Recommend id={id} />
+      </RecommendBox>
     </div>
   );
 };
@@ -133,7 +135,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   margin: 15px auto;
   justify-content: center;
   .trailer {
@@ -145,20 +147,19 @@ const Container = styled.div`
   }
 
   @media screen and (max-width: 1030px) {
+    max-height: 690px;
     .cardBox {
       width: 58%;
-      padding-bottom: 90%;
+      margin-bottom: 20px;
     }
-  }
-  @media screen and (max-width: 1007px) {
   }
 
   @media screen and (max-width: 768px) {
     max-width: 640px;
+    height: 700px;
     .cardBox {
       width: 80%;
       margin: 0 auto;
-      padding-bottom: 120%;
     }
     .cardInfo {
       top: 10rem;
@@ -170,6 +171,7 @@ const Container = styled.div`
   @media screen and (max-width: 576px) {
     max-width: 520px;
     top: 7em;
+    height: 650px;
   }
 `;
 
@@ -177,7 +179,7 @@ const Card = styled.div`
   width: 30%;
   max-width: 640px;
   min-width: 320px;
-  height: 865px;
+
   margin-right: 30px;
 `;
 
@@ -253,5 +255,12 @@ const LittleInfo = styled.div`
   span {
     text-align: center;
     margin-top: 5px;
+  }
+`;
+
+const RecommendBox = styled.div`
+  @media screen and (max-width: 1030px) {
+    position: absolute;
+    top: 225%;
   }
 `;
