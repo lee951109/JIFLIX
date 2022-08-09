@@ -56,12 +56,19 @@ const MovieCard = ({ movie, recommend }) => {
   }
   return (
     <RecommendCard
-      style={{
-        backgroundImage:
-          "url(" +
-          `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${recommend.poster_path}` +
-          ")",
-      }}
+      style={
+        recommend.poster_path !== null
+          ? {
+              backgroundImage:
+                "url(" +
+                `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${recommend.poster_path}` +
+                ")",
+            }
+          : {
+              backgroundImage:
+                "url(https://hanamsport.or.kr/www/images/contents/thum_detail.jpg)",
+            }
+      }
       onClick={showDetail}
     >
       <RecommendOverLay>
@@ -132,6 +139,7 @@ const Card = styled.div`
 
 const FlexDiv = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin-left: 10px;
 `;
 

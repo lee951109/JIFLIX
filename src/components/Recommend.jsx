@@ -21,7 +21,7 @@ const Recommend = ({ id }) => {
   }
   return (
     <Container>
-      <Title>추천 영화({recommend.results.length})</Title>
+      <Title className="title">추천 영화({recommend.results.length})</Title>
 
       <Card>
         {recommend.results &&
@@ -41,6 +41,11 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  @media screen and (max-width: 580px) {
+    .title {
+      margin: 25% auto 10px auto;
+    }
+  }
 `;
 
 const Title = styled.h1`
@@ -49,7 +54,7 @@ const Title = styled.h1`
   padding: 10px;
   color: red;
   font-size: 24px;
-  margin: 10% auto 10px auto;
+  margin: 15% auto 10px auto;
   width: 140px;
   height: 40px;
 `;
@@ -58,7 +63,7 @@ const Card = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin: 20px 100px;
+  margin: 0 auto;
   justify-content: space-between;
   @media screen and (max-width: 949px) {
     margin: 0 auto;
