@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { movieAction } from "../redux/actions/movieAction";
 
 const MovieCard = ({ movie, recommend }) => {
   const { genreList } = useSelector((state) => state.movie);
