@@ -71,6 +71,25 @@ function getMovieDetail(id) {
   };
 }
 
+function getGenres() {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "GET_GENRES_REQUEST" });
+      const genresApi = await api.get(
+        `/genre/movie/list?api_key=${API_KEY}&language=ko-KR`
+      );
+
+      dispatch({
+        type: "GET_GENRES_SUCCESS",
+        payload: { genresApi: genresApi.data.genres },
+      });
+    } catch (error) {
+      dispatch({ type: "GET_GENRES_FALIURE" });
+      console.log("GENRES_ERROR", error);
+    }
+  };
+}
+
 function getMovieRecommend(id) {
   return async (dispatch) => {
     try {
@@ -123,6 +142,7 @@ function getNowMovie() {
 export const movieAction = {
   getMovies,
   getMovieDetail,
+  getGenres,
   getMovieRecommend,
   getNowMovie,
 };

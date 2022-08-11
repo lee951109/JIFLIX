@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
 
 import Loading from "../components/Loading";
@@ -8,10 +9,8 @@ import { movieAction } from "../redux/actions/movieAction";
 
 const Movies = () => {
   const dispatch = useDispatch();
-
   const { nowMovies, loading } = useSelector((state) => state.now);
 
-  console.log("nowMovies ? ", nowMovies);
   useEffect(() => {
     dispatch(movieAction.getNowMovie());
   }, []);
