@@ -24,8 +24,10 @@ const NowMovieCard = ({ movie }) => {
       <CardInfo className="card_info">
         <Header className="header">
           <img src={posterImg} />
-          <h1>{movie.title}</h1>
-          <h4>{year}</h4>
+          <div className="title">
+            <h1>{movie.title}</h1>
+            <h4>{year}</h4>
+          </div>
         </Header>
       </CardInfo>
     </Card>
@@ -65,33 +67,38 @@ const CardInfo = styled.div`
 `;
 
 const Header = styled.div`
+  position: relative;
+  float: left;
   width: 200px;
   display: flex;
   padding: 25px;
   img {
-    position: relative;
-    float: left;
     margin-right: 20px;
-    height: 80px;
+    height: 90px;
   }
-  h1 {
-    height: 60px;
+  .title {
+    display: flex;
+    flex-direction: column;
     margin: 0;
-    font-size: 25px;
-    font-weight: 800;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-height: 1.2;
-  }
-  h4 {
-    color: #9ac7fa;
-    font-weight: 400;
-    font-size: 13px;
-    margin-bottom: 40px;
-    line-height: 1.2;
+    h1 {
+      width: 96px;
+      margin: 0;
+      font-size: 25px;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 1.2;
+    }
+    h4 {
+      color: #9ac7fa;
+      font-weight: 400;
+      font-size: 13px;
+      margin-bottom: 40px;
+      line-height: 1.2;
+    }
   }
 `;
 
