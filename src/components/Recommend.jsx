@@ -41,9 +41,26 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  @media screen and (max-width: 580px) {
+  @media screen and (max-width: 1240px) {
     .title {
-      margin: 25% auto 10px auto;
+      margin: 30% auto 10px auto;
+    }
+  }
+
+  @media screen and (max-width: 1030px) {
+    .title {
+      margin: 35% auto 10px auto;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .title {
+      margin: auto;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .title {
+      margin: 5% auto 10px auto;
     }
   }
 `;
@@ -54,7 +71,7 @@ const Title = styled.h1`
   padding: 10px;
   color: red;
   font-size: 24px;
-  margin: 15% auto 10px auto;
+  margin: 350px auto 10px auto;
   width: 140px;
   height: 40px;
 `;

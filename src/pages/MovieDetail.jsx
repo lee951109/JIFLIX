@@ -166,6 +166,7 @@ const Container = styled.div`
     }
     .trailer {
       display: flex;
+      z-index: 100;
     }
   }
   @media screen and (max-width: 576px) {
@@ -261,6 +262,6 @@ const LittleInfo = styled.div`
 const RecommendBox = styled.div`
   @media screen and (max-width: 1030px) {
     position: absolute;
-    top: 225%;
+    top: 250%;
   }
 `;
