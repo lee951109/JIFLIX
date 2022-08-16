@@ -1,5 +1,6 @@
 let initialState = {
   nowMovies: {},
+  searchMovies: {},
   loading: true,
 };
 
@@ -12,7 +13,14 @@ function nowMovieReducer(state = initialState, action) {
     case "GET_NOWMOVIE_SUCCESS":
       return {
         ...state,
-        nowMovies: payload.NowMovieApi,
+        nowMovies: payload.nowMovieApi,
+        loading: false,
+      };
+
+    case "GET_SEARCHMOVIE_SUCCESS":
+      return {
+        ...state,
+        searchMovies: payload.searchMovieApi,
         loading: false,
       };
 
