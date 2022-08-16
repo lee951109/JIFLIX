@@ -120,18 +120,30 @@ function getMovieRecommend(id) {
   };
 }
 
-function getNowMovie() {
+function getNowMovie(query) {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_NOWMOVIE_REQUEST" });
-      const NowMovieApi = await api.get(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=1`
+
+      const nowMovieApi = await api.get(
+        `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=1`
       );
 
-      dispatch({
-        type: "GET_NOWMOVIE_SUCCESS",
-        payload: { NowMovieApi: NowMovieApi.data },
-      });
+      const searchMovieApi = await api.get(
+        `/search/movie?api_key=${API_KEY}&language=ko-KR&page=1&query=${query}`
+      );
+      console.log("searchMovieApi", searchMovieApi);
+      if (query === "") {
+        dispatch({
+          type: "GET_NOWMOVIE_SUCCESS",
+          payload: { nowMovieApi: nowMovieApi.data },
+        });
+      } else {
+        dispatch({
+          type: "GET_SEARCHMOVIE_SUCCESS",
+          payload: { searchMovieApi: searchMovieApi.data },
+        });
+      }
     } catch (error) {
       dispatch({ type: "GET_NEWMOVIE_FALIURE" });
       console.log("NowMovie_ERROR", error);
