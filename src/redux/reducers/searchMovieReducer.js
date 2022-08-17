@@ -1,23 +1,22 @@
 let initialState = {
-  nowMovies: {},
-
+  searchMovies: {},
   loading: true,
 };
 
-function nowMovieReducer(state = initialState, action) {
+function searchMovieReducer(state = initialState, action) {
   let { type, payload } = action;
   switch (type) {
-    case "GET_NOWMOVIE_REQUEST":
+    case "GET_SERACH_REQUEST":
       return { ...state, loading: true };
 
-    case "GET_NOWMOVIE_SUCCESS":
+    case "GET_SERACH_SUCCESS":
       return {
         ...state,
-        nowMovies: payload.nowMovieApi,
+        searchMovies: payload.searchMovieApi,
         loading: false,
       };
 
-    case "GET_NEWMOVIE_FALIURE":
+    case "GET_SERACH_FALIURE":
       return { ...state, loading: false };
 
     default:
@@ -25,4 +24,4 @@ function nowMovieReducer(state = initialState, action) {
   }
 }
 
-export default nowMovieReducer;
+export default searchMovieReducer;

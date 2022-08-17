@@ -10,24 +10,11 @@ import { movieAction } from "../redux/actions/movieAction";
 
 const Movies = () => {
   const dispatch = useDispatch();
-  const { nowMovies, searchMovie, loading } = useSelector((state) => state.now);
-  const [query, setQuery] = useState("");
-
-  const search = (e) => {
-    if (e.key === "Enter") {
-      let keyword = e.target.value;
-      console.log(keyword);
-      setQuery(keyword);
-    }
-  };
+  const { nowMovies, loading } = useSelector((state) => state.now);
 
   useEffect(() => {
-    if (query === "") {
-      dispatch(movieAction.getNowMovie());
-    } else {
-      dispatch(movieAction.getNowMovie(query));
-    }
-  }, [query]);
+    dispatch(movieAction.getNowMovie());
+  }, []);
 
   if (loading) {
     return <Loading loading={loading} />;
@@ -35,13 +22,7 @@ const Movies = () => {
   return (
     <Container>
       <LeftMenu>
-        <form>
-          <input
-            placeholder="Search Title"
-            type="text"
-            onKeyPress={(e) => search(e)}
-          />
-        </form>
+        <form></form>
       </LeftMenu>
       <MainContant>
         {nowMovies.results.map((movie) => (

@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { movieAction } from "../redux/actions/movieAction";
 
 const Nav = () => {
+  const dispatch = useDispatch();
+  const { serachMovie } = useSelector((state) => state.search);
+  const [query, setQuery] = useState("");
+  let keyword = "";
+  const searchMovie = (e) => {
+    e.preventDefault();
+    keyword = e.target.value;
+    console.log(keyword);
+  };
+
+  const search = (e) => {
+    if (e.key === "Enter") {
+      keyword = e.target.value;
+      console.log(keyword);
+      // setQuery(keyword);
+      // dispatch(movieAction.getSearchMovie(keyword));
+    }
+  };
+
   return (
     <div>
       <div className="navbar">
@@ -38,9 +59,13 @@ const Nav = () => {
             <Link to="/movies/:id">My Favorite</Link>
           </div>
         </div>
-        <form>
+        <form onSubmit={(e) => searchMovie(e)} onClick={(e) => searchMovie(e)}>
           <div className="nav__search">
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="영화 검색"
+              onKeyPress={(e) => search(e)}
+            />
             <button type="submit">
               <FontAwesomeIcon icon={faSearch} />
             </button>
