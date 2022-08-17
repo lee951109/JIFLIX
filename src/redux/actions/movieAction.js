@@ -120,7 +120,7 @@ function getMovieRecommend(id) {
   };
 }
 
-function getNowMovie(query) {
+function getNowMovie() {
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_NOWMOVIE_REQUEST" });
@@ -128,25 +128,35 @@ function getNowMovie(query) {
       const nowMovieApi = await api.get(
         `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=1`
       );
+      dispatch({
+        type: "GET_NOWMOVIE_SUCCESS",
+        payload: { nowMovieApi: nowMovieApi.data },
+      });
+    } catch (error) {
+      dispatch({ type: "GET_NEWMOVIE_FALIURE" });
+      console.log("NowMovie_ERROR", error);
+    }
+  };
+}
+
+function getSearchMovie(query) {
+  console.log("query ? ", query);
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "GET_SEARCH_REQUEST" });
 
       const searchMovieApi = await api.get(
         `/search/movie?api_key=${API_KEY}&language=ko-KR&page=1&query=${query}`
       );
       console.log("searchMovieApi", searchMovieApi);
-      if (query === "") {
-        dispatch({
-          type: "GET_NOWMOVIE_SUCCESS",
-          payload: { nowMovieApi: nowMovieApi.data },
-        });
-      } else {
-        dispatch({
-          type: "GET_SEARCHMOVIE_SUCCESS",
-          payload: { searchMovieApi: searchMovieApi.data },
-        });
-      }
+
+      dispatch({
+        type: "GET_SEARCH_SUCCESS",
+        payload: { searchMovieApi: searchMovieApi.data },
+      });
     } catch (error) {
-      dispatch({ type: "GET_NEWMOVIE_FALIURE" });
-      console.log("NowMovie_ERROR", error);
+      dispatch({ type: "GET_SEARCH_FALIUER" });
+      console.log("searchMovie_ERROR", error);
     }
   };
 }
@@ -157,4 +167,5 @@ export const movieAction = {
   getGenres,
   getMovieRecommend,
   getNowMovie,
+  getSearchMovie,
 };
