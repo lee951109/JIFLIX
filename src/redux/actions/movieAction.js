@@ -148,7 +148,7 @@ function getSearchMovie(query) {
       const searchMovieApi = await api.get(
         `/search/movie?api_key=${API_KEY}&language=ko-KR&page=1&query=${query}`
       );
-      console.log("searchMovieApi", searchMovieApi);
+      console.log("searchMovieApi", searchMovieApi.data);
 
       dispatch({
         type: "GET_SEARCH_SUCCESS",

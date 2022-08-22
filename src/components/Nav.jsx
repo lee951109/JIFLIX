@@ -8,20 +8,20 @@ import { movieAction } from "../redux/actions/movieAction";
 const Nav = () => {
   const dispatch = useDispatch();
   const { serachMovie } = useSelector((state) => state.search);
-  const [query, setQuery] = useState("");
-  let keyword = "";
-  const searchMovie = (e) => {
+
+  const submit = (e) => {
     e.preventDefault();
-    keyword = e.target.value;
-    console.log(keyword);
+    // console.log(e.tartget.searchInput.value);
   };
+
+  const searchMovie = (e) => {};
 
   const search = (e) => {
     if (e.key === "Enter") {
+      let keyword = "";
       keyword = e.target.value;
-      console.log(keyword);
-      // setQuery(keyword);
-      // dispatch(movieAction.getSearchMovie(keyword));
+      console.log("onkeyPress event : " + keyword);
+      dispatch(movieAction.getSearchMovie(keyword));
     }
   };
 
@@ -59,14 +59,15 @@ const Nav = () => {
             <Link to="/movies/:id">My Favorite</Link>
           </div>
         </div>
-        <form onSubmit={(e) => searchMovie(e)} onClick={(e) => searchMovie(e)}>
+        <form onSubmit={(e) => submit(e)}>
           <div className="nav__search">
             <input
               type="text"
               placeholder="영화 검색"
+              name="searchInput"
               onKeyPress={(e) => search(e)}
             />
-            <button type="submit">
+            <button type="submit" onClick={(e) => searchMovie(e)}>
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
