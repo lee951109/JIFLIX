@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Loading from "../components/Loading";
@@ -10,24 +9,15 @@ import { movieAction } from "../redux/actions/movieAction";
 
 const Movies = () => {
   const dispatch = useDispatch();
-  const { nowMovies, searchMovie, loading } = useSelector((state) => state.now);
-  const [query, setQuery] = useState("");
+  const { nowMovies, loading } = useSelector((state) => state.now);
 
-  const search = (e) => {
-    if (e.key === "Enter") {
-      let keyword = e.target.value;
-      console.log(keyword);
-      setQuery(keyword);
-    }
-  };
+  //Movies page
+  const { searchMovies, searchQuery } = useSelector((state) => state.search);
 
   useEffect(() => {
-    if (query === "") {
-      dispatch(movieAction.getNowMovie());
-    } else {
-      dispatch(movieAction.getNowMovie(query));
-    }
-  }, [query]);
+    dispatch(movieAction.getNowMovie());
+    console.log("searchMovies : ", searchMovies.results);
+  }, [searchMovies]);
 
   if (loading) {
     return <Loading loading={loading} />;
@@ -35,18 +25,16 @@ const Movies = () => {
   return (
     <Container>
       <LeftMenu>
-        <form>
-          <input
-            placeholder="Search Title"
-            type="text"
-            onKeyPress={(e) => search(e)}
-          />
-        </form>
+        <form></form>
       </LeftMenu>
       <MainContant>
-        {nowMovies.results.map((movie) => (
-          <NowMovieCard key={movie.id} movie={movie} />
-        ))}
+        {searchQuery == ""
+          ? nowMovies.results.map((movie) => (
+              <NowMovieCard key={movie.id} movie={movie} />
+            ))
+          : searchMovies.results.map((movie) => (
+              <NowMovieCard key={movie.id} movie={movie} />
+            ))}
       </MainContant>
     </Container>
   );

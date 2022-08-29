@@ -1,6 +1,5 @@
 let initialState = {
   nowMovies: {},
-
   loading: true,
 };
 

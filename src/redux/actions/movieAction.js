@@ -128,6 +128,7 @@ function getNowMovie() {
       const nowMovieApi = await api.get(
         `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=1`
       );
+
       dispatch({
         type: "GET_NOWMOVIE_SUCCESS",
         payload: { nowMovieApi: nowMovieApi.data },
@@ -140,7 +141,8 @@ function getNowMovie() {
 }
 
 function getSearchMovie(query) {
-  console.log("query ? ", query);
+  let searchQuery = "";
+
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_SEARCH_REQUEST" });
@@ -148,11 +150,11 @@ function getSearchMovie(query) {
       const searchMovieApi = await api.get(
         `/search/movie?api_key=${API_KEY}&language=ko-KR&page=1&query=${query}`
       );
-      console.log("searchMovieApi", searchMovieApi.data);
-
+      searchQuery = query;
+      console.log("searchQuery? ", searchQuery.length);
       dispatch({
-        type: "GET_SEARCH_SUCCESS",
-        payload: { searchMovieApi: searchMovieApi.data },
+        type: "GET_SERACH_SUCCESS",
+        payload: { searchMovieApi: searchMovieApi.data, searchQuery },
       });
     } catch (error) {
       dispatch({ type: "GET_SEARCH_FALIUER" });

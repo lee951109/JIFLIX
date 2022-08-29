@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { movieAction } from "../redux/actions/movieAction";
+import { IconGroup } from "semantic-ui-react";
 
 const Nav = () => {
   const dispatch = useDispatch();
-  const { serachMovie } = useSelector((state) => state.search);
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(e.tartget.searchInput.value);
+    console.log("handleSubmit keyword - ", keyword);
   };
 
-  const searchMovie = (e) => {};
-
-  const search = (e) => {
+  const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      let keyword = "";
-      keyword = e.target.value;
-      console.log("onkeyPress event : " + keyword);
-      dispatch(movieAction.getSearchMovie(keyword));
+      setKeyword(e.target.value);
+      if (keyword !== "") {
+        console.log("handleKeyPress keyword - ", keyword);
+        navigate("/movies");
+        dispatch(movieAction.getSearchMovie(keyword));
+      }
+      // else {
+      //   // keyword 가 ""이면 페이지 리로더
+      //   window.location.reload();
+      // }
     }
   };
+
+  useEffect(() => {}, [keyword]);
 
   return (
     <div>
@@ -55,19 +63,21 @@ const Nav = () => {
           </button>
           <div className="drop_menu">
             <Link to="/">Home</Link>
-            <Link to="/movies">Movies</Link>
+            <Link to="/movies" state={{}}>
+              Movies
+            </Link>
             <Link to="/movies/:id">My Favorite</Link>
           </div>
         </div>
-        <form onSubmit={(e) => submit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="nav__search">
             <input
               type="text"
               placeholder="영화 검색"
               name="searchInput"
-              onKeyPress={(e) => search(e)}
+              onKeyPress={(e) => handleKeyPress(e)}
             />
-            <button type="submit" onClick={(e) => searchMovie(e)}>
+            <button type="submit">
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
