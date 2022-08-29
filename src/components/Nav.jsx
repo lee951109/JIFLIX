@@ -14,6 +14,8 @@ const Nav = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit keyword - ", keyword);
+    navigate("/movies");
+    dispatch(movieAction.getSearchMovie(keyword));
   };
 
   const handleKeyPress = (e) => {
