@@ -126,8 +126,9 @@ function getNowMovie() {
       dispatch({ type: "GET_NOWMOVIE_REQUEST" });
 
       const nowMovieApi = await api.get(
-        `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=1`
+        `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=2`
       );
+      console.log("now movie legnth ? ", nowMovieApi.data);
 
       dispatch({
         type: "GET_NOWMOVIE_SUCCESS",
@@ -151,7 +152,6 @@ function getSearchMovie(query) {
         `/search/movie?api_key=${API_KEY}&language=ko-KR&page=1&query=${query}`
       );
       searchQuery = query;
-      console.log("searchQuery? ", searchQuery.length);
       dispatch({
         type: "GET_SERACH_SUCCESS",
         payload: { searchMovieApi: searchMovieApi.data, searchQuery },

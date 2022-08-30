@@ -132,10 +132,13 @@ const CardInfo = styled.div`
 const Header = styled.div`
   position: relative;
   float: left;
-  width: 180px;
+  width: 185px;
   display: flex;
   flex-wrap: wrap;
-  padding: 25px;
+  padding-top: 25px;
+  padding-left: 25px;
+  padding-bottom: 25px;
+  padding-right: 100%;
   img {
     margin-right: 20px;
     height: 90px;

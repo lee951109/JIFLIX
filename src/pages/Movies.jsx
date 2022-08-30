@@ -16,7 +16,6 @@ const Movies = () => {
 
   useEffect(() => {
     dispatch(movieAction.getNowMovie());
-    console.log("searchMovies : ", searchMovies.results);
   }, [searchMovies]);
 
   if (loading) {

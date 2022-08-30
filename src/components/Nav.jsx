@@ -9,28 +9,42 @@ import { IconGroup } from "semantic-ui-react";
 const Nav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [scrolling, setScrolling] = useState(false);
   const [keyword, setKeyword] = useState("");
+  let inputValue = "";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("handleSubmit keyword - ", keyword);
-    navigate("/movies");
-    dispatch(movieAction.getSearchMovie(keyword));
+  // const handleScroll = () => {
+  //   if (window.scrollY === 0) {
+  //     setScrolling(false);
+  //   } else if (window.scrollY > 50) {
+  //     setScrolling(true);
+  //   }
+  // };
+
+  // window.addEventListener("scroll", handleScroll);
+
+  const handleChange = (e) => {
+    inputValue = e.target.value;
+    setKeyword(inputValue);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      setKeyword(e.target.value);
-      if (keyword !== "") {
-        console.log("handleKeyPress keyword - ", keyword);
+      inputValue = e.target.value;
+      if (inputValue !== "") {
         navigate("/movies");
-        dispatch(movieAction.getSearchMovie(keyword));
+        dispatch(movieAction.getSearchMovie(inputValue));
+      } else {
+        // keyword 가 ""이면 페이지 리로더
+        window.location.reload();
       }
-      // else {
-      //   // keyword 가 ""이면 페이지 리로더
-      //   window.location.reload();
-      // }
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/movies");
+    dispatch(movieAction.getSearchMovie(keyword));
   };
 
   useEffect(() => {}, [keyword]);
@@ -77,6 +91,7 @@ const Nav = () => {
               type="text"
               placeholder="영화 검색"
               name="searchInput"
+              onChange={(e) => handleChange(e)}
               onKeyPress={(e) => handleKeyPress(e)}
             />
             <button type="submit">
