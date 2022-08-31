@@ -138,7 +138,7 @@ const Header = styled.div`
   padding-top: 25px;
   padding-left: 25px;
   padding-bottom: 25px;
-  padding-right: 100%;
+  padding-right: 50%;
   img {
     margin-right: 20px;
     height: 90px;

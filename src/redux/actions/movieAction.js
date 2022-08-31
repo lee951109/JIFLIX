@@ -120,15 +120,17 @@ function getMovieRecommend(id) {
   };
 }
 
-function getNowMovie() {
+function getNowMovie(pageNum) {
+  console.log("Api pageNum ? ", pageNum);
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_NOWMOVIE_REQUEST" });
 
       const nowMovieApi = await api.get(
-        `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=2`
+        // `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=${currentPage}`
+        `/movie/popular?api_key=${API_KEY}&language=ko-KR&page=${pageNum}`
       );
-      console.log("now movie legnth ? ", nowMovieApi.data);
+      console.log("now Movie Api : ", nowMovieApi.data);
 
       dispatch({
         type: "GET_NOWMOVIE_SUCCESS",

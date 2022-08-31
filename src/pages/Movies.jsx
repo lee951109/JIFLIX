@@ -1,22 +1,29 @@
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Loading from "../components/Loading";
 import NowMovieCard from "../components/NowMovieCard";
+import Pagination from "../components/Pagination";
 import { movieAction } from "../redux/actions/movieAction";
 
 const Movies = () => {
   const dispatch = useDispatch();
   const { nowMovies, loading } = useSelector((state) => state.now);
+  const { searchMovies, searchQuery } = useSelector((state) => state.search); // Movies page
 
-  //Movies page
-  const { searchMovies, searchQuery } = useSelector((state) => state.search);
+  const { currentPage, setCurrentPage } = useState(1);
+  // const { postPerPage } = useState(20);
+  // const paginate = (pageNum) => {
+  //   setCurrentPage(pageNum);
+  //   dispatch(movieAction.getNowMovie(currentPage));
+  // };
+  // console.log("currentPage ? ", currentPage);
 
   useEffect(() => {
     dispatch(movieAction.getNowMovie());
-  }, [searchMovies]);
+  }, [searchMovies, currentPage]);
 
   if (loading) {
     return <Loading loading={loading} />;
@@ -35,6 +42,7 @@ const Movies = () => {
               <NowMovieCard key={movie.id} movie={movie} />
             ))}
       </MainContant>
+      <Pagination postPerPage={20} totalPage={400} paginate={setCurrentPage} />
     </Container>
   );
 };
