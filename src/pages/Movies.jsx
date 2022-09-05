@@ -14,19 +14,23 @@ const Movies = () => {
   const { nowMovies, loading } = useSelector((state) => state.now);
   const { searchMovies, searchQuery } = useSelector((state) => state.search); // Movies page
 
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  const paginate = (pageNum) => {
-    console.log("pageNum : " + pageNum);
+  // const paginate = (pageNum) => {
+  //   console.log("pageNum : " + pageNum);
 
-    setCurrentPage(pageNum);
-    dispatch(movieAction.getNowMovie(currentPage));
-  };
-  console.log("currentPage ? " + currentPage);
+  //   setCurrentPage(pageNum);
+  //   dispatch(movieAction.getNowMovie(currentPage));
+  // };
+  // console.log("currentPage ? " + currentPage);
+
+  const [limit, setLimit] = useState(10); // 한 페이지에 보여줄 데이터의 개수
+  const [page, setPage] = useState(1); // 페이지 초기 값은 1페이지
+  const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
   useEffect(() => {
-    dispatch(movieAction.getNowMovie(currentPage));
-  }, [searchMovies, currentPage]);
+    dispatch(movieAction.getNowMovie(page));
+  }, [searchMovies, page]);
 
   if (loading) {
     return <Loading loading={loading} />;
@@ -51,8 +55,12 @@ const Movies = () => {
         {/* <Pagination className="pagination" paginate={paginate} /> */}
         <Pagination2
           className="pagination"
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+          blockNum={blockNum}
+          setBlockNum={setBlockNum}
+          counts={600}
         />
       </Paginate>
     </>
