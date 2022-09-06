@@ -1,3 +1,5 @@
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +8,6 @@ import styled from "styled-components";
 import Loading from "../components/Loading";
 import NowMovieCard from "../components/NowMovieCard";
 import Pagination from "../components/Pagination";
-import Pagination2 from "../components/Pagination2";
 import { movieAction } from "../redux/actions/movieAction";
 
 const Movies = () => {
@@ -14,19 +15,19 @@ const Movies = () => {
   const { nowMovies, loading } = useSelector((state) => state.now);
   const { searchMovies, searchQuery } = useSelector((state) => state.search); // Movies page
 
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const paginate = (pageNum) => {
-  //   console.log("pageNum : " + pageNum);
-
-  //   setCurrentPage(pageNum);
-  //   dispatch(movieAction.getNowMovie(currentPage));
-  // };
-  // console.log("currentPage ? " + currentPage);
-
   const [limit, setLimit] = useState(10); // 한 페이지에 보여줄 데이터의 개수
   const [page, setPage] = useState(1); // 페이지 초기 값은 1페이지
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDropdown = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+    console.log("isOpen ? ", isOpen);
+  };
 
   useEffect(() => {
     dispatch(movieAction.getNowMovie(page));
@@ -39,7 +40,19 @@ const Movies = () => {
     <>
       <Container>
         <LeftMenu>
-          <form></form>
+          <SortBox>
+            <div className="sort">
+              <h2>Sort</h2>
+              <h2>
+                <FontAwesomeIcon
+                  className="arrow"
+                  icon={faArrowRight}
+                  onClick={handleDropdown}
+                />
+              </h2>
+            </div>
+            <div className="dropbox"></div>
+          </SortBox>
         </LeftMenu>
         <MainContant>
           {searchQuery == ""
@@ -52,8 +65,7 @@ const Movies = () => {
         </MainContant>
       </Container>
       <Paginate>
-        {/* <Pagination className="pagination" paginate={paginate} /> */}
-        <Pagination2
+        <Pagination
           className="pagination"
           limit={limit}
           page={page}
@@ -74,9 +86,27 @@ const Container = styled.div`
   width: 100%;
 `;
 const LeftMenu = styled.div`
-  border: 10px solid red;
+  display: flex;
   width: 35%;
   height: 400px;
+`;
+const SortBox = styled.div`
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 70%;
+  height: 80px;
+  .sort {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+    .arrow {
+      cursor: pointer;
+    }
+  }
+  .dropbox {
+    width: 200px;
+  }
 `;
 const MainContant = styled.div`
   display: flex;
