@@ -35,24 +35,12 @@ const DropBox = () => {
         </div>
         <DropDiv isOpen={isOpen}>
           <ul className="dropbox">
-            <li className="sortList">
-              인기 <FontAwesomeIcon icon={faArrowUp} />
-            </li>
-            <li className="sortList">
-              인기 <FontAwesomeIcon icon={faArrowDown} />
-            </li>
-            <li className="sortList">
-              출시일 <FontAwesomeIcon icon={faArrowUp} />
-            </li>
-            <li className="sortList">
-              출시일 <FontAwesomeIcon icon={faArrowDown} />
-            </li>
-            <li className="sortList">
-              별점 <FontAwesomeIcon icon={faArrowUp} />
-            </li>
-            <li className="sortList">
-              별점 <FontAwesomeIcon icon={faArrowDown} />
-            </li>
+            <li className="sortList">인기도 오름차순</li>
+            <li className="sortList">인기도 내림차순</li>
+            <li className="sortList">출시일 오름차순</li>
+            <li className="sortList">출시일 내림차순</li>
+            <li className="sortList">별점 오름차순</li>
+            <li className="sortList">별점 내림차순</li>
           </ul>
         </DropDiv>
       </SortBox>
