@@ -23,16 +23,6 @@ const Movies = () => {
   const nowMovieCounts = Math.floor(nowMovies?.total_results / 1200); // 데이터가 너무 많아서 일시적으로 잘라 표기
   // const searchMovieCounts = Math.floor(searchMovies?.total_results);
 
-  const renderCompoents = () => {
-    if (searchQuery == "" && sortMovies.length < 1) {
-      return console.log("nowMovies API");
-    } else if (searchQuery == "" && sortMovies.length > 0) {
-      return console.log("sortMovies Array");
-    } else if (searchQuery !== "") {
-      return console.log("sarchMovies API");
-    }
-  };
-
   useEffect(() => {
     dispatch(movieAction.getNowMovie(page));
   }, [searchMovies, page, sortMovies]);
@@ -52,19 +42,12 @@ const Movies = () => {
         </LeftMenu>
         <MainContant>
           {searchQuery == ""
-            ? searchQuery == "" && sortMovies.length < 1
-              ? nowMovies.results.map((movie) => (
-                  <NowMovieCard key={movie.id} movie={movie} />
-                ))
-              : sortMovies.map((movie) => (
-                  <NowMovieCard key={movie.id} movie={movie} />
-                ))
+            ? nowMovies.results.map((movie) => (
+                <NowMovieCard key={movie.id} movie={movie} />
+              ))
             : searchMovies.results.map((movie) => (
                 <NowMovieCard key={movie.id} movie={movie} />
               ))}
-          {/* {sortMovies.map((movie) => (
-            <NowMovieCard key={movie.id} movie={movie} />
-          ))} */}
         </MainContant>
       </Container>
       <Paginate>

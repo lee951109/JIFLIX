@@ -121,7 +121,6 @@ function getMovieRecommend(id) {
 }
 
 function getNowMovie(pageNum) {
-  console.log("Api pageNum ? ", pageNum);
   return async (dispatch) => {
     try {
       dispatch({ type: "GET_NOWMOVIE_REQUEST" });
@@ -130,7 +129,6 @@ function getNowMovie(pageNum) {
         // `/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR&page=${currentPage}`
         `/movie/popular?api_key=${API_KEY}&language=ko-KR&page=${pageNum}`
       );
-      console.log("now Movie Api : ", nowMovieApi.data);
 
       dispatch({
         type: "GET_NOWMOVIE_SUCCESS",
@@ -154,6 +152,7 @@ function getSearchMovie(query) {
         `/search/movie?api_key=${API_KEY}&language=ko-KR&page=1&query=${query}`
       );
       searchQuery = query;
+      console.log("searchMovie -", searchMovieApi);
       dispatch({
         type: "GET_SERACH_SUCCESS",
         payload: { searchMovieApi: searchMovieApi.data, searchQuery },

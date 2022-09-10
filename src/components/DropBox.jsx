@@ -7,9 +7,14 @@ import {
   faArrowUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 
-const DropBox = () => {
+const DropBox = ({ nowMovies, sortMovies, setSortMovies }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [ascPopular, setAscPopular] = useState([]);
+  const [descPopular, setDescPopular] = useState([]);
+  const [ascDate, setAscDate] = useState([]);
+  const [descDate, setDescDate] = useState([]);
 
   const handleDropdown = () => {
     if (!isOpen) {
@@ -19,6 +24,49 @@ const DropBox = () => {
     }
     console.log("isOpen ? ", isOpen);
   };
+
+  // 인기도 오름차순
+  const ascPopularityArry = () => {
+    ascPopular.sort(function (a, b) {
+      if (a.popularity > b.popularity) {
+        return 1;
+      } else if (a.popularity === b.popularity) {
+        return 0;
+      } else if (a.popularity < b.popularity) {
+        return -1;
+      }
+    });
+    setSortMovies(ascPopular);
+  };
+
+  //인기도 내림차순
+  const descPopularityArry = () => {
+    setSortMovies(descPopular);
+  };
+
+  const ascDateArry = () => {
+    ascDate.sort(function (a, b) {
+      return new Date(a.release_date) - new Date(b.release_date);
+    });
+    setSortMovies(ascDate);
+    console.log("개봉일 오름차순 : ", sortMovies);
+  };
+
+  const descDateArry = () => {
+    descDate.sort(function (a, b) {
+      return new Date(b.release_date) - new Date(a.release_date);
+    });
+    setSortMovies(descDate);
+    console.log("개봉일 내림차순 : ", sortMovies);
+  };
+
+  useEffect(() => {
+    setAscPopular(nowMovies?.results);
+    setDescPopular(nowMovies?.results);
+    setAscDate(nowMovies?.results);
+    setDescDate(nowMovies?.results);
+    console.log("nowMovies : ", nowMovies);
+  }, [sortMovies]);
 
   return (
     <Container>
@@ -35,12 +83,18 @@ const DropBox = () => {
         </div>
         <DropDiv isOpen={isOpen}>
           <ul className="dropbox">
-            <li className="sortList">인기도 오름차순</li>
-            <li className="sortList">인기도 내림차순</li>
-            <li className="sortList">출시일 오름차순</li>
-            <li className="sortList">출시일 내림차순</li>
-            <li className="sortList">별점 오름차순</li>
-            <li className="sortList">별점 내림차순</li>
+            <li className="sortList" onClick={ascPopularityArry}>
+              인기도 오름차순
+            </li>
+            <li className="sortList" onClick={descPopularityArry}>
+              인기도 내림차순
+            </li>
+            <li className="sortList" onClick={ascDateArry}>
+              출시일 오름차순
+            </li>
+            <li className="sortList" onClick={descDateArry}>
+              출시일 내림차순
+            </li>
           </ul>
         </DropDiv>
       </SortBox>
@@ -88,10 +142,13 @@ const DropDiv = styled.div`
     border-top: none;
     margin-top: 1px;
     padding: 0;
+    height: 135px;
+    overflow-y: scroll;
   }
   .sortList {
     border-bottom: 1px solid white;
     padding: 10px;
+    cursor: pointer;
     &:hover {
       background-color: #181818;
     }
