@@ -9,8 +9,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 
-const DropBox = ({ nowMovies, sortMovies, setSortMovies }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const DropBox = ({
+  nowMovies,
+  sortMovies,
+  setSortMovies,
+  isOpen,
+  setIsOpen,
+}) => {
   const [ascPopular, setAscPopular] = useState([]);
   const [descPopular, setDescPopular] = useState([]);
   const [ascDate, setAscDate] = useState([]);
@@ -49,7 +54,6 @@ const DropBox = ({ nowMovies, sortMovies, setSortMovies }) => {
       return new Date(a.release_date) - new Date(b.release_date);
     });
     setSortMovies(ascDate);
-    console.log("개봉일 오름차순 : ", sortMovies);
   };
 
   const descDateArry = () => {
@@ -57,7 +61,6 @@ const DropBox = ({ nowMovies, sortMovies, setSortMovies }) => {
       return new Date(b.release_date) - new Date(a.release_date);
     });
     setSortMovies(descDate);
-    console.log("개봉일 내림차순 : ", sortMovies);
   };
 
   useEffect(() => {
@@ -65,7 +68,6 @@ const DropBox = ({ nowMovies, sortMovies, setSortMovies }) => {
     setDescPopular(nowMovies?.results);
     setAscDate(nowMovies?.results);
     setDescDate(nowMovies?.results);
-    console.log("nowMovies : ", nowMovies);
   }, [sortMovies]);
 
   return (
@@ -81,7 +83,7 @@ const DropBox = ({ nowMovies, sortMovies, setSortMovies }) => {
             />
           </ArrowH2>
         </div>
-        <DropDiv isOpen={isOpen}>
+        <DropDiv isOpen={isOpen} className={isOpen ? "open" : null}>
           <ul className="dropbox">
             <li className="sortList" onClick={ascPopularityArry}>
               인기도 오름차순
@@ -117,7 +119,9 @@ const SortBox = styled.div`
   margin: 0 auto;
   width: 45%;
   height: 80px;
-
+  @media screen and (max-width: 992px) {
+    width: 80%;
+  }
   .sort {
     display: flex;
     justify-content: space-between;
@@ -134,7 +138,7 @@ const ArrowH2 = styled.h2`
 `;
 const DropDiv = styled.div`
   transition: 0.3s;
-  opacity: ${(props) => (props.isOpen ? "1" : "0")};
+  display: ${(props) => (props.isOpen ? "block" : "none")};
 
   .dropbox {
     border: 1px solid white;

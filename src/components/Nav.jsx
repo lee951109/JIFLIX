@@ -66,9 +66,9 @@ const Nav = () => {
             <li>
               <Link to="/movies">Movies</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/movies/:id">My Favorite</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
 

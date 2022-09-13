@@ -1,4 +1,6 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Pagination = ({
   limit,
@@ -8,6 +10,8 @@ const Pagination = ({
   setBlockNum,
   counts,
 }) => {
+  const [width, setWidth] = useState(window.innerWidth);
+  const [pageLimit, setPageLimit] = useState(10);
   const createArry = (n) => {
     // 새로운 배열을 만들기 위한 함수.
     const iArry = new Array(n);
@@ -15,11 +19,36 @@ const Pagination = ({
     return iArry;
   };
 
-  const pageLimit = 10; // 보여줄 페이지네이션 개수
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    // let width = window.innerWidth;
+    if (width > 1025) {
+      setPageLimit(10);
+    } else if (830 < width && width <= 1025) {
+      setPageLimit(7);
+    } else if (680 < width && width <= 830) {
+      setPageLimit(5);
+    } else if (width <= 680) {
+      setPageLimit(3);
+    }
+
+    console.log("width는? ", width);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      // clean up
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [width]);
+
+  // let pageLimit = 10; // 보여줄 페이지네이션 개수
+
   const totalPage = Math.ceil(counts / limit); // //총 데이터의 개수(counts)를 한 페이지의 보여줄 데이터(limit)로 나눠 올림을 하면 전체 페이지의 개수가 나온다.
   const blockArea = Number(blockNum * pageLimit); // 화면 전환 할 때 보여줄 페이지네이션 개수를 구역으로 지정한다.
-  const nArry = createArry(Number(totalPage)); // nArry 함수에 전체 페이지의 개수를 배열로 담는다.
-  let pArry = nArry?.slice(blockArea, Number(pageLimit) + blockArea); // 페이지네이션 구역을 nArr 함수에 slice하여 원하는 페이지네이션 block 만 보여 줄 수 있게 설정
+  const nArry = createArry(totalPage); // nArry 함수에 전체 페이지의 개수를 배열로 담는다.
+  let pArry = nArry?.slice(blockArea, pageLimit + blockArea); // 페이지네이션 구역을 nArr 함수에 slice하여 원하는 페이지네이션 block 만 보여 줄 수 있게 설정
   // 0, 10 /
   const firstPage = () => {
     setPage(1);

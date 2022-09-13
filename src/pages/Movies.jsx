@@ -19,19 +19,9 @@ const Movies = () => {
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
   const [sortMovies, setSortMovies] = useState([]);
-
   const nowMovieCounts = Math.floor(nowMovies?.total_results / 1200); // 데이터가 너무 많아서 일시적으로 잘라 표기
   // const searchMovieCounts = Math.floor(searchMovies?.total_results);
-
-  const renderCompoents = () => {
-    if (searchQuery == "" && sortMovies.length < 1) {
-      return console.log("nowMovies API");
-    } else if (searchQuery == "" && sortMovies.length > 0) {
-      return console.log("sortMovies Array");
-    } else if (searchQuery !== "") {
-      return console.log("sarchMovies API");
-    }
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(movieAction.getNowMovie(page));
@@ -43,16 +33,18 @@ const Movies = () => {
   return (
     <>
       <Container>
-        <LeftMenu>
+        <LeftMenu className="leftMenu" isOpen={isOpen}>
           <DropBox
             nowMovies={nowMovies}
             sortMovies={sortMovies}
             setSortMovies={setSortMovies}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
           />
         </LeftMenu>
-        <MainContant>
-          {searchQuery == ""
-            ? searchQuery == "" && sortMovies.length < 1
+        <MainContant className="mainContant">
+          {searchQuery === ""
+            ? searchQuery === "" && sortMovies.length < 1
               ? nowMovies.results.map((movie) => (
                   <NowMovieCard key={movie.id} movie={movie} />
                 ))
@@ -62,9 +54,6 @@ const Movies = () => {
             : searchMovies.results.map((movie) => (
                 <NowMovieCard key={movie.id} movie={movie} />
               ))}
-          {/* {sortMovies.map((movie) => (
-            <NowMovieCard key={movie.id} movie={movie} />
-          ))} */}
         </MainContant>
       </Container>
       <Paginate>
@@ -87,10 +76,24 @@ const Container = styled.div`
   justify-content: center;
   margin: 0 auto;
   width: 100%;
+
+  @media screen and (max-width: 992px) {
+    flex-direction: column;
+    .leftMenu {
+      width: 100%;
+      height: 150px;
+    }
+    .mainContant {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
 `;
 const LeftMenu = styled.div`
   width: 35%;
   height: 400px;
+  margin-bottom: ${(props) => (props.isOpen ? "100px" : null)};
+  transition: 0.5s;
 `;
 
 const MainContant = styled.div`

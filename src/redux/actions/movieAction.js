@@ -130,6 +130,7 @@ function getNowMovie(pageNum) {
         `/movie/popular?api_key=${API_KEY}&language=ko-KR&page=${pageNum}`
       );
 
+      console.log("API : ", nowMovieApi);
       dispatch({
         type: "GET_NOWMOVIE_SUCCESS",
         payload: { nowMovieApi: nowMovieApi.data },

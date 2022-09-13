@@ -8,6 +8,7 @@ import { movieAction } from "../redux/actions/movieAction";
 
 const NowMovieCard = ({ movie }) => {
   const posterImg = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+  const backdropImg = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
   const dispatch = useDispatch();
   const { genres } = useSelector((state) => state.genres);
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const NowMovieCard = ({ movie }) => {
 
   return (
     <Card
+      backdropImg={backdropImg}
       style={
         movie.backdrop_path !== null
           ? {
@@ -78,11 +80,65 @@ const NowMovieCard = ({ movie }) => {
 const Card = styled.div`
   width: 380px;
   height: 525px;
+  background-repeat: no-repeat;
   background-size: contain;
   background-position: right;
   border-radius: 5px;
   margin: 20px;
   box-shadow: 0 0 150px -45px rgba(255, 51, 0, 0.5);
+
+  @media screen and (max-width: 1292px) {
+    /* width: 290px; */
+    width: 43%;
+  }
+  @media screen and (max-width: 1030px) {
+    width: 270px;
+    background-size: cover;
+  }
+
+  @media screen and (max-width: 992px) {
+    width: 90%;
+    height: 300px;
+    background-image: ${(props) => props.backdropImg};
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 10 auto;
+    .card_info {
+      background: linear-gradient(0deg, #141413 50%, transparent);
+      display: inline-grid;
+      width: 100%;
+      .overview {
+        width: 90%;
+        padding: 10px 20px;
+      }
+      .subinfo {
+        padding: 0 20px;
+      }
+    }
+    .header {
+      padding: 5px 0 0 25px;
+      width: 100%;
+      .title {
+        width: 86%;
+        h1 {
+          width: 90%;
+          overflow: auto;
+          -webkit-box-orient: initial;
+        }
+      }
+      img {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 660px) {
+    .header {
+      .title {
+        width: 80%;
+      }
+    }
+  }
 
   @media screen and(min-width:768px) {
     .card_info {
@@ -90,12 +146,6 @@ const Card = styled.div`
     }
     .header {
       width: 70%;
-    }
-  }
-  @media screen and (max-width: 768px) {
-    .card_info {
-      background: linear-gradient(0deg, #141413 50%, transparent);
-      display: inline-grid;
     }
   }
 `;
@@ -113,7 +163,7 @@ const CardInfo = styled.div`
   }
   .subinfo {
     font-size: 30px;
-    padding: 40px 20px;
+    padding: 40px 0 0 20px;
     .star {
       color: yellow;
       margin-right: 5px;
