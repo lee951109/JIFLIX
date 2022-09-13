@@ -1,4 +1,4 @@
-# <h1 styl="color:red">JIFLIX</h1>
+# <span styl="color:red">JIFLIX</span>
 [JIFLIX DEMO!!](https://jiflix.netlify.app/)
 
 ## 어려웠던 부분..
