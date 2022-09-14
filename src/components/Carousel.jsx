@@ -118,4 +118,12 @@ const StyledSlider = styled(Slider)`
   .dots_custom li.slick-active button {
     background-color: #dc143c;
   }
+
+  .slick-prev,
+  .slick-next {
+    width: 70px;
+    height: 200px;
+    color: #fff;
+    z-index: 100;
+  }
 `;
