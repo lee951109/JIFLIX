@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { movieAction } from "../redux/actions/movieAction";
 import { IconGroup } from "semantic-ui-react";
+import styled from "styled-components";
 
 const Nav = () => {
   const dispatch = useDispatch();
@@ -13,15 +14,15 @@ const Nav = () => {
   const [keyword, setKeyword] = useState("");
   let inputValue = "";
 
-  // const handleScroll = () => {
-  //   if (window.scrollY === 0) {
-  //     setScrolling(false);
-  //   } else if (window.scrollY > 50) {
-  //     setScrolling(true);
-  //   }
-  // };
+  const handleScroll = () => {
+    if (window.scrollY <= 500) {
+      setScrolling(false);
+    } else if (window.scrollY > 500) {
+      setScrolling(true);
+    }
+  };
 
-  // window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll);
 
   const handleChange = (e) => {
     inputValue = e.target.value;
@@ -51,7 +52,7 @@ const Nav = () => {
 
   return (
     <div>
-      <div className="navbar">
+      <NavBar className="navbar" scrolling={scrolling}>
         <div className="nav__box">
           <div className="nav__log">
             <Link to="/">
@@ -99,9 +100,14 @@ const Nav = () => {
             </button>
           </div>
         </form>
-      </div>
+      </NavBar>
     </div>
   );
 };
+
+const NavBar = styled.div`
+  background-color: ${(props) =>
+    props.scrolling ? "rgb(0, 0, 0)" : "rgb(0, 0, 0 / 0%)"};
+`;
 
 export default Nav;

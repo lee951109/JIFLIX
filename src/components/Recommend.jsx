@@ -81,7 +81,7 @@ const Card = styled.div`
   flex-wrap: wrap;
   width: 100%;
   margin: 0 auto;
-  justify-content: flex-start;
+  justify-content: space-between;
   @media screen and (max-width: 949px) {
     margin: 0 auto;
   }

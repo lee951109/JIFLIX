@@ -116,6 +116,7 @@ const Card = styled.div`
   background-position: center;
   border-radius: 5px;
   flex: none;
+  cursor: pointer;
 
   &:hover {
     position: absolute;
