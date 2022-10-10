@@ -94,6 +94,7 @@ const LeftMenu = styled.div`
   height: 400px;
   margin-bottom: ${(props) => (props.isOpen ? "100px" : null)};
   transition: 0.5s;
+  margin-top: 100px;
 `;
 
 const MainContant = styled.div`
